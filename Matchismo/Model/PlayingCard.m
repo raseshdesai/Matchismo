@@ -25,7 +25,7 @@
     return [rankList[self.rank] stringByAppendingString:self.suit];
 }
 
--(void) setSuit:(NSString *)suit{
+-(void) setSuit:(NSString *) suit{
     if([[PlayingCard getAllSuits] containsObject:suit]){
         _suit = suit;
     }
@@ -36,7 +36,7 @@
 }
 
 -(void) setRank:(NSUInteger)rank{
-    if(rank < [[PlayingCard getAllRanks] count]){
+    if(rank <= [PlayingCard getMaxRank]){
         _rank = rank;
     }
 }
