@@ -35,4 +35,10 @@
     return _suit ? _suit : @"?";
 }
 
+-(void) setRank:(NSUInteger)rank{
+    if(rank < [[PlayingCard getAllRanks] count]){
+        _rank = rank;
+    }
+}
+
 @end
