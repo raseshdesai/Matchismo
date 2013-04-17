@@ -17,6 +17,4 @@
 
 +(NSArray *) getAllSuits;
 
-+ (NSUInteger) getMaxRank;
-
 @end
