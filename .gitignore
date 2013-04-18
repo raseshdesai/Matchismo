@@ -8,3 +8,7 @@
 *.xcuserstate
 
 Matchismo.xcodeproj/project.xcworkspace/xcuserdata/iRaseshsMac.xcuserdatad/UserInterfaceState.xcuserstate
+
+*.xcscheme
+
+*.plist
