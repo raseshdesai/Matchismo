@@ -20,6 +20,10 @@
     return @[@"♥", @"♣", @"♦", @"♠"];
 }
 
++(NSUInteger) getMaxRank{
+    return [PlayingCard getAllRanks].count - 1;
+}
+
 -(NSString *) contents{
     NSArray * rankList = [PlayingCard getAllRanks];
     return [rankList[self.rank] stringByAppendingString:self.suit];

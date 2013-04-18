@@ -33,10 +33,16 @@
     }
 }
 
+/*
+ Note: You can draw only from a non empty list of cards, hence the check for cards count
+ */
 - (Card *) drawRandomCard{
-    NSUInteger randomIndex = arc4random() % self.cards.count;
-    Card * randomCard = self.cards[randomIndex];
-    [self.cards removeObjectAtIndex:randomIndex];
+    Card * randomCard;
+    if(self.cards.count > 0){ 
+        NSUInteger randomIndex = arc4random() % self.cards.count;
+        randomCard = self.cards[randomIndex];
+        [self.cards removeObjectAtIndex:randomIndex];
+    }
     return randomCard;
 }
 
