@@ -7,7 +7,6 @@
 //
 
 #import "CardGameViewController.h"
-#import "Deck.h"
 #import "PlayingCardDeck.h"
 
 @interface CardGameViewController ()
@@ -17,6 +16,8 @@
 @property (nonatomic) int flipCount;
 
 @property (strong, nonatomic) Deck * deck;
+
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 
 @end
 
@@ -29,6 +30,17 @@
     return _deck;
 }
 
+/*
+ Note: System will call "setters" on all the @properties that hold View objects [like list of buttons or label] when the application runs (...when all these buttons have been unfreeze-dried, not sure what this means YET)
+ */
+-(void) setCardButtons:(NSArray *)cardButtons{
+    _cardButtons = cardButtons;
+    for (UIButton * cardButton in cardButtons) {
+        Card * card = [self.deck drawRandomCard];
+        [cardButton setTitle:card.contents forState:UIControlStateSelected];
+    }
+}
+
 - (void) setFlipCount:(int)flipCount{
     _flipCount = flipCount;
     self.flipLabel.text = [NSString stringWithFormat:@"Flip Count: %d", self.flipCount];
@@ -39,8 +51,8 @@
  */
 - (IBAction)flipCard:(UIButton *)sender {
     
-    Card * card = [self.deck drawRandomCard];
-    [sender setTitle:card.contents forState:UIControlStateSelected];
+//    Card * card = [self.deck drawRandomCard];
+//    [sender setTitle:card.contents forState:UIControlStateSelected];
     
     sender.selected = !sender.isSelected;
     
