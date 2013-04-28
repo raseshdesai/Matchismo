@@ -45,4 +45,23 @@
     }
 }
 
+//overriding the match defined in super class Card
+-(int) match:(NSArray *)otherCards{
+    int score = 0;
+    
+    if (otherCards.count == 1) {
+        id objectInArray = [otherCards lastObject];
+        if ([objectInArray isKindOfClass:[PlayingCard class]]) {
+            PlayingCard * otherCard = (PlayingCard *) objectInArray;
+            if (self.rank == otherCard.rank) {
+                score = 4;
+            } else if ([self.suit isEqualToString: otherCard.suit]) {
+                score = 1;
+            }
+        }
+    }
+    
+    return score;
+}
+
 @end
