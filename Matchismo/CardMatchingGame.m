@@ -31,7 +31,7 @@
 -(id) initWithCardCount:(NSUInteger)cardCount
               usingDeck:(Deck *)deck{
     self = [super init];
-    if(self){
+    if(self) {
         for (int i = 0; i < cardCount; i++) {
             Card * card = [deck drawRandomCard];
             if(!card){
@@ -40,24 +40,30 @@
                 self.cards[i] = card;
             }
         }
+        self.lastActionMsg = @"";
     }
     return self;
 }
 
--(void) flipCardAtIndex: (NSUInteger) index{
+-(void) flipCardAtIndex: (NSUInteger) index {
     Card * card = [self cardAtIndex:index];
     if(!card.isUnPlayable){
         if (!card.isFaceUp) {
             if([self maxAllowableCardAlreadyFacedUp:2]) return;
+            self.lastActionMsg = [@"Flipped up " stringByAppendingString: card.contents];
             for (Card * otherCard in self.cards) {
                 if(otherCard.isFaceUp && !otherCard.isUnPlayable) {
                     int matchScore = [card match:@[otherCard]];
                     if (matchScore != 0) {
                         card.unPlayable = YES;
                         otherCard.unPlayable = YES;
-                        self.score += matchScore * MATCH_BONUS;
-                    } else{
-                        self.score -= MATCH_PENALTY;
+                        int pointsGained = matchScore * MATCH_BONUS;
+                        self.score += pointsGained;
+                        self.lastActionMsg = [NSString stringWithFormat:@"Matched %@ and %@ for %d points!", card.contents, otherCard.contents, pointsGained];
+                    } else {
+                        int pointsLost = MATCH_PENALTY;
+                        self.score -= pointsLost;
+                        self.lastActionMsg = [NSString stringWithFormat:@"%@ and %@ don't match, %d point penalty.", card.contents, otherCard.contents, pointsLost];
                     }
                 }
             }

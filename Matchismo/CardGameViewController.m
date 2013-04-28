@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame * game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastActionMsgLabel;
 
 @end
 
@@ -45,11 +46,10 @@
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled]; //Selected and Disabled
         cardButton.selected = [card isFaceUp];
         cardButton.enabled = ![card isUnPlayable];
-        if (card.isUnPlayable) {
-            cardButton.alpha = 0.3; //reduce the transparency of the disabled cardButtons
-        }
+        cardButton.alpha = [card isUnPlayable] ?  0.3 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.lastActionMsgLabel.text = [NSString stringWithFormat:@"Msg: %@", self.game.lastActionMsg];
 }
 
 - (void) setFlipCount:(int)flipCount{
@@ -69,6 +69,13 @@
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self updateUI];
+}
+
+- (IBAction)resetGame {
+    self.game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
+                                                         usingDeck:[[PlayingCardDeck alloc] init]];
+    [self updateUI];
+    self.flipCount = 0;
 }
 
 @end
