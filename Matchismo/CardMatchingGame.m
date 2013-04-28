@@ -48,6 +48,7 @@
     Card * card = [self cardAtIndex:index];
     if(!card.isUnPlayable){
         if (!card.isFaceUp) {
+            if([self maxAllowableCardAlreadyFacedUp:2]) return;
             for (Card * otherCard in self.cards) {
                 if(otherCard.isFaceUp && !otherCard.isUnPlayable) {
                     int matchScore = [card match:@[otherCard]];
@@ -71,6 +72,25 @@
         return (Card *)self.cards[index];
     }
     return nil;
+}
+
+-(BOOL) maxAllowableCardAlreadyFacedUp: (int) maxAllowableCardFacedUp {
+    int numberOfCardsWithFaceUpAndNotDisabled = 0;
+    for (Card * card in self.cards) {
+        if (card.isFaceUp && !card.isUnPlayable) {
+            numberOfCardsWithFaceUpAndNotDisabled++;
+        }
+    }
+    if (numberOfCardsWithFaceUpAndNotDisabled < maxAllowableCardFacedUp) {
+        return NO;
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%d Card Matchismo - Invalid Operation", maxAllowableCardFacedUp]
+                                                    message:[NSString stringWithFormat:@"At any point you can unlock a maximum of %d cards", maxAllowableCardFacedUp]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    return YES;
 }
 
 @end
