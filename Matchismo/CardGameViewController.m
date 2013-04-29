@@ -27,8 +27,7 @@
 -(CardMatchingGame *) game{
     if (!_game) {
         _game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
-                                                 usingDeck:[[PlayingCardDeck alloc] init]
-                                          withCardsToMatch:2];
+                                                 usingDeck:[[PlayingCardDeck alloc] init]];
     }
     return _game;
 }
@@ -63,11 +62,8 @@
 /*
  Note: After drawing all 52 cards from deck, title for selected state will be set to null, hence the title for default state will always show up
  */
-- (IBAction)flipCard:(UIButton *)sender {
-    
-//    Card * card = [self.deck drawRandomCard];
-//    [sender setTitle:card.contents forState:UIControlStateSelected];
-    
+- (IBAction)flipCard:(UIButton *)sender {    
+    if (![sender isSelected] && [self maxAllowableCardAlreadyFacedUp:2]) return;
     sender.selected = !sender.isSelected;
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
@@ -76,8 +72,7 @@
 
 - (IBAction)resetGame {
     self.game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
-                                                 usingDeck:[[PlayingCardDeck alloc] init]
-                                          withCardsToMatch:2];
+                                                 usingDeck:[[PlayingCardDeck alloc] init]];
     [self updateUI];
     self.flipCount = 0;
     self.gameModeSelector.enabled = YES;
@@ -90,6 +85,25 @@
     if (1 == sender.selectedSegmentIndex) {
         NSLog(@"3 Card Game Selected");
     }
+}
+
+-(BOOL) maxAllowableCardAlreadyFacedUp: (int) maxAllowableCardFacedUp {
+    int numberOfCardsSelectedAndNotDisabled = 0;
+    for (UIButton * cardButton in self.cardButtons) {
+        if (cardButton.isSelected && cardButton.isEnabled) {
+            numberOfCardsSelectedAndNotDisabled++;
+        }
+    }
+    if (numberOfCardsSelectedAndNotDisabled < maxAllowableCardFacedUp) {
+        return NO;
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%d Card Matchismo - Invalid Operation", maxAllowableCardFacedUp]
+                                                    message:[NSString stringWithFormat:@"At any point you can unlock a maximum of %d cards", maxAllowableCardFacedUp]
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    return YES;
 }
 
 @end
