@@ -12,13 +12,14 @@
 
 @property (nonatomic, readwrite) int score;
 @property (strong, nonatomic) NSMutableArray * cards;
+@property (nonatomic) NSUInteger cardsToMatch;
 
 @end
 
 @implementation CardMatchingGame
 
-#define MATCH_BONUS 2;
-#define MATCH_PENALTY 4;
+#define MATCH_BONUS 3;
+#define MATCH_PENALTY 2;
 #define FLIP_COST 1;
 
 -(NSMutableArray *) cards{
@@ -29,7 +30,8 @@
 }
 
 -(id) initWithCardCount:(NSUInteger)cardCount
-              usingDeck:(Deck *)deck{
+              usingDeck:(Deck *)deck
+       withCardsToMatch: (NSUInteger) cardsToMatch {
     self = [super init];
     if(self) {
         for (int i = 0; i < cardCount; i++) {
@@ -41,6 +43,7 @@
             }
         }
         self.lastActionMsg = @"";
+        self.cardsToMatch = cardsToMatch;
     }
     return self;
 }
@@ -49,7 +52,7 @@
     Card * card = [self cardAtIndex:index];
     if(!card.isUnPlayable){
         if (!card.isFaceUp) {
-            if([self maxAllowableCardAlreadyFacedUp:2]) return;
+            if([self maxAllowableCardAlreadyFacedUp:self.cardsToMatch]) return;
             self.lastActionMsg = [@"Flipped up " stringByAppendingString: card.contents];
             for (Card * otherCard in self.cards) {
                 if(otherCard.isFaceUp && !otherCard.isUnPlayable) {

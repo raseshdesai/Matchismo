@@ -18,6 +18,7 @@
 @property (strong, nonatomic) CardMatchingGame * game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastActionMsgLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeSelector;
 
 @end
 
@@ -26,7 +27,8 @@
 -(CardMatchingGame *) game{
     if (!_game) {
         _game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
-                                                 usingDeck:[[PlayingCardDeck alloc] init]];
+                                                 usingDeck:[[PlayingCardDeck alloc] init]
+                                          withCardsToMatch:2];
     }
     return _game;
 }
@@ -50,6 +52,7 @@
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.lastActionMsgLabel.text = [NSString stringWithFormat:@"Msg: %@", self.game.lastActionMsg];
+    self.gameModeSelector.enabled = NO;
 }
 
 - (void) setFlipCount:(int)flipCount{
@@ -73,9 +76,20 @@
 
 - (IBAction)resetGame {
     self.game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
-                                                         usingDeck:[[PlayingCardDeck alloc] init]];
+                                                 usingDeck:[[PlayingCardDeck alloc] init]
+                                          withCardsToMatch:2];
     [self updateUI];
     self.flipCount = 0;
+    self.gameModeSelector.enabled = YES;
+}
+
+- (IBAction)selectGameMode:(UISegmentedControl *)sender {
+    if (0 == sender.selectedSegmentIndex) {
+        NSLog(@"2 Card Game Selected");
+    }
+    if (1 == sender.selectedSegmentIndex) {
+        NSLog(@"3 Card Game Selected");
+    }
 }
 
 @end
