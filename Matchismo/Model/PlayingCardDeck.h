@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
+#import "PlayingCard.h"
 
 @interface PlayingCardDeck : Deck
 
+-(id) initWithPlayingCardMatching2;
 
+-(id) initWithPlayingCardMatching3;
 
 @end

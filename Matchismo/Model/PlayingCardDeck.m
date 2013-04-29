@@ -8,15 +8,33 @@
 
 #import "PlayingCardDeck.h"
 #import "PlayingCard.h"
+#import "PlayingCardMatching2.h"
+#import "PlayingCardMatching3.h"
 
 @implementation PlayingCardDeck
 
--(id) init {
+-(id) initWithPlayingCardMatching2 {
     self = [super init];
     if(self){
         for (int rank = 1; rank <= [PlayingCard getMaxRank]; rank++) {
             for (NSString * suit in [PlayingCard getAllSuits]) {
-                PlayingCard * card = [[PlayingCard alloc] init];
+                PlayingCardMatching2 * card = [[PlayingCardMatching2 alloc] init];
+                [card setRank:rank];
+                [card setSuit: suit];
+                [self addCard: card
+                        atTop:YES];
+            }
+        }
+    }
+    return self;
+}
+
+-(id) initWithPlayingCardMatching3 {
+    self = [super init];
+    if(self){
+        for (int rank = 1; rank <= [PlayingCard getMaxRank]; rank++) {
+            for (NSString * suit in [PlayingCard getAllSuits]) {
+                PlayingCardMatching3 * card = [[PlayingCardMatching3 alloc] init];
                 [card setRank:rank];
                 [card setSuit: suit];
                 [self addCard: card

@@ -8,7 +8,8 @@
 
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
-#import "CardMatchingGame.h"
+#import "CardGameMatching2.h"
+#import "CardGameMatching3.h"
 
 @interface CardGameViewController ()
 
@@ -19,18 +20,41 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastActionMsgLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeSelector;
+@property (nonatomic) int maxAllowableCardFacedUp;
 
 @end
 
 @implementation CardGameViewController
 
--(CardMatchingGame *) game{
-    if (!_game) {
-        _game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
-                                                 usingDeck:[[PlayingCardDeck alloc] init]];
+-(void) setGameModeSelector:(UISegmentedControl *)gameModeSelector{
+    _gameModeSelector = gameModeSelector;
+    if (!self.game) {
+        [self initializeGameBasedOnSelectedMode];
     }
-    return _game;
 }
+
+-(void) initializeGameBasedOnSelectedMode{
+        if (0 == self.gameModeSelector.selectedSegmentIndex) {
+            self.game = [self initialize2CardMatchingGame];
+            self.maxAllowableCardFacedUp = 2;
+        }
+        if (1 == self.gameModeSelector.selectedSegmentIndex) {
+            self.game = [self initialize3CardMatchingGame];
+            self.maxAllowableCardFacedUp = 3;
+        }
+}
+
+-(CardMatchingGame *) initialize2CardMatchingGame{
+    return [[CardGameMatching2 alloc]initWithCardCount:self.cardButtons.count
+                                            usingDeck:[[PlayingCardDeck alloc] initWithPlayingCardMatching2]];
+}
+
+-(CardMatchingGame *) initialize3CardMatchingGame{
+    return [[CardGameMatching3 alloc]initWithCardCount:self.cardButtons.count
+                                             usingDeck:[[PlayingCardDeck alloc] initWithPlayingCardMatching3]];
+}
+
+
 
 /*
  Note: System will call "setters" on all the @properties that hold View objects [like list of buttons or label] when the application runs (...when all these buttons have been unfreeze-dried, not sure what this means YET)
@@ -63,7 +87,7 @@
  Note: After drawing all 52 cards from deck, title for selected state will be set to null, hence the title for default state will always show up
  */
 - (IBAction)flipCard:(UIButton *)sender {    
-    if (![sender isSelected] && [self maxAllowableCardAlreadyFacedUp:2]) return;
+    if (![sender isSelected] && [self maxAllowableCardAlreadyFacedUp:self.maxAllowableCardFacedUp]) return;
     sender.selected = !sender.isSelected;
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
@@ -71,20 +95,14 @@
 }
 
 - (IBAction)resetGame {
-    self.game = [[CardMatchingGame alloc]initWithCardCount:self.cardButtons.count
-                                                 usingDeck:[[PlayingCardDeck alloc] init]];
+    [self initializeGameBasedOnSelectedMode];
     [self updateUI];
     self.flipCount = 0;
     self.gameModeSelector.enabled = YES;
 }
 
-- (IBAction)selectGameMode:(UISegmentedControl *)sender {
-    if (0 == sender.selectedSegmentIndex) {
-        NSLog(@"2 Card Game Selected");
-    }
-    if (1 == sender.selectedSegmentIndex) {
-        NSLog(@"3 Card Game Selected");
-    }
+- (IBAction)changeGameMode {
+    [self initializeGameBasedOnSelectedMode];
 }
 
 -(BOOL) maxAllowableCardAlreadyFacedUp: (int) maxAllowableCardFacedUp {
