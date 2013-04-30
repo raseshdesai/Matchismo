@@ -19,6 +19,7 @@
 
 -(void) flipCardAtIndex: (NSUInteger) index;
 
+//TODO (low priority): see if we can again get to a point where score can be readonly here
 @property (nonatomic, readwrite) int score;
 @property (strong, nonatomic) NSString * lastActionMsg;
 @property (strong, nonatomic) NSMutableArray * cards;
