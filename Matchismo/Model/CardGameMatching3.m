@@ -46,9 +46,8 @@
                     self.score -= pointsLost;
                     self.lastActionMsg = [NSString stringWithFormat:@"%@, %@ and %@ don't match, %d point penalty.", card.contents, otherCard1.contents, otherCard2.contents, pointsLost];
                 }
-                self.score -= FLIP_COST;
             }
-            
+            self.score -= FLIP_COST;
         }
         card.faceUp = !card.isFaceUp;
     }
