@@ -12,3 +12,7 @@ Matchismo.xcodeproj/project.xcworkspace/xcuserdata/iRaseshsMac.xcuserdatad/UserI
 *.xcscheme
 
 *.plist
+
+Matchismo/.DS_Store
+
+Matchismo.xcodeproj/xcuserdata/dhwanidesai.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist
