@@ -67,11 +67,21 @@
 -(void) updateUI{
     for (UIButton * cardButton in self.cardButtons) {
         Card * card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
+        
         [cardButton setTitle:card.contents forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled]; //Selected and Disabled
+        
         cardButton.selected = [card isFaceUp];
         cardButton.enabled = ![card isUnPlayable];
         cardButton.alpha = [card isUnPlayable] ?  0.3 : 1.0;
+        
+        if(![cardButton isSelected] && [cardButton isEnabled]){
+            UIImage * cardBackImage = [UIImage imageNamed:@"cardimage1"];
+            [cardButton setImage:cardBackImage forState:UIControlStateNormal];
+            [cardButton setImageEdgeInsets:UIEdgeInsetsMake(3, 2, 3, 2)];
+        } else{
+            [cardButton setImage:Nil forState:UIControlStateNormal];
+        }
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     self.lastActionMsgLabel.text = [NSString stringWithFormat:@"Msg: %@", self.game.lastActionMsg];

@@ -27,6 +27,7 @@
 		A98D3F6C172E45F5006A19D4 /* PlayingCardMatching3.m in Sources */ = {isa = PBXBuildFile; fileRef = A98D3F6B172E45F5006A19D4 /* PlayingCardMatching3.m */; };
 		A98D3F6F172E47E9006A19D4 /* CardGameMatching2.m in Sources */ = {isa = PBXBuildFile; fileRef = A98D3F6E172E47E9006A19D4 /* CardGameMatching2.m */; };
 		A98D3F72172E47FF006A19D4 /* CardGameMatching3.m in Sources */ = {isa = PBXBuildFile; fileRef = A98D3F71172E47FF006A19D4 /* CardGameMatching3.m */; };
+		A9DD76F7173CC1EE0061007E /* cardimage1.png in Resources */ = {isa = PBXBuildFile; fileRef = A9DD76F6173CC1EE0061007E /* cardimage1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		A98D3F6E172E47E9006A19D4 /* CardGameMatching2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardGameMatching2.m; path = Model/CardGameMatching2.m; sourceTree = "<group>"; };
 		A98D3F70172E47FF006A19D4 /* CardGameMatching3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardGameMatching3.h; path = Model/CardGameMatching3.h; sourceTree = "<group>"; };
 		A98D3F71172E47FF006A19D4 /* CardGameMatching3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardGameMatching3.m; path = Model/CardGameMatching3.m; sourceTree = "<group>"; };
+		A9DD76F6173CC1EE0061007E /* cardimage1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cardimage1.png; path = ../../../../Images/cardimage1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 		12373910171A629700A3E5D6 /* Matchismo */ = {
 			isa = PBXGroup;
 			children = (
+				A9DD76F6173CC1EE0061007E /* cardimage1.png */,
 				12373925171A629700A3E5D6 /* CardGameViewController.h */,
 				12373926171A629700A3E5D6 /* CardGameViewController.m */,
 				12373922171A629700A3E5D6 /* MainStoryboard.storyboard */,
@@ -217,6 +220,7 @@
 				1237391F171A629700A3E5D6 /* Default@2x.png in Resources */,
 				12373921171A629700A3E5D6 /* Default-568h@2x.png in Resources */,
 				12373924171A629700A3E5D6 /* MainStoryboard.storyboard in Resources */,
+				A9DD76F7173CC1EE0061007E /* cardimage1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
